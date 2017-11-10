@@ -176,7 +176,7 @@ namespace NPBehave
                     List<string> keys = blackboard.Keys;
                     foreach (string key in keys)
                     {
-                        DrawKeyValue(key, blackboard.Get(key).ToString());
+                        DrawKeyValue(key, blackboard.Get(key)!=null? blackboard.Get(key).ToString():"null");
                     }
                 }
                 EditorGUILayout.EndVertical();

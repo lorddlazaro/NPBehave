@@ -275,21 +275,25 @@ namespace NPBehave
         }
 
         [Test]
-        [ExpectedException(typeof(Exception))]
+        //[ExpectedException(typeof(Exception))]
         public void StopLowerPriorityChildrenForChild_WithoutImmediateRestart_ShouldThrowError()
         {
-            Parallel.Policy failurePolicy = Parallel.Policy.ALL;
-            Parallel.Policy successPolicy = Parallel.Policy.ALL;
+            Assert.That(() => {
 
-            MockNode firstChild = new MockNode();
-            MockNode secondChild = new MockNode();
-            Parallel sut = new Parallel(successPolicy, failurePolicy, firstChild, secondChild);
-            TestRoot behaviorTree = CreateBehaviorTree(sut);
+                Parallel.Policy failurePolicy = Parallel.Policy.ALL;
+                Parallel.Policy successPolicy = Parallel.Policy.ALL;
 
-            behaviorTree.Start();
-            firstChild.Finish(false);
-            sut.StopLowerPriorityChildrenForChild(firstChild, false);
+                MockNode firstChild = new MockNode();
+                MockNode secondChild = new MockNode();
+                Parallel sut = new Parallel(successPolicy, failurePolicy, firstChild, secondChild);
+                TestRoot behaviorTree = CreateBehaviorTree(sut);
 
+                behaviorTree.Start();
+                firstChild.Finish(false);
+                sut.StopLowerPriorityChildrenForChild(firstChild, false);
+
+            },
+                Throws.TypeOf<Exception>());
         }
     }
 }
